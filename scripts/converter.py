@@ -46,6 +46,7 @@ def convert(config: Config, input_directory: str, output_directory: str, output_
             logger = logger
         ) for file_path in audio_files
     ]
+    logger.verbose("Starting the conversion worker processes...", config.verbose)
     with Pool(processes=workers) as worker:
         worker.map(converter, audio_files)
 
@@ -67,19 +68,19 @@ def converter(conversion_job: ConversionJob):
     # Conversion specific data
     output_format = conversion_job.output_format[1:]
     output_path = conversion_job.output_path
-    verbose_flag = conversion_job.verbose
+    # verbose_flag = conversion_job.verbose
 
     # File specific data
     audio_file = conversion_job.file_path
     audio_name = audio_file.name[: audio_file.name.rfind(".")]
     converted_name = "{}.{}".format(audio_name, output_format)
 
-    logger.verbose(
-        "Converting '{}' to format '{}'...".format(audio_name, output_format), verbose_flag
+    logger.info(
+        "Converting '{}' to format '{}'...".format(audio_name, output_format)
     )
 
     audio = AudioSegment.from_file(audio_file.as_posix(), audio_file.suffix[1:])
     output_name = output_path.joinpath(converted_name)
     audio.export(output_name.as_posix(), format=output_format, bitrate="192k",)
 
-    logger.verbose("'{}' converted!".format(audio_name), verbose_flag)
+    logger.success("'{}' converted!".format(audio_name))
