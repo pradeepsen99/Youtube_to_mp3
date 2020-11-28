@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Youtube_to_mp3",
-    version="0.1.3a",
+    version="0.1.4a",
     packages=find_packages(),
     include_package_data=True,
     python_requires=">=3.6",
