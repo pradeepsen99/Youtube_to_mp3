@@ -17,13 +17,8 @@ AUDIO_EXTENSIONS = [
 
 AUDIO_EXTENSIONS_SET = set(AUDIO_EXTENSIONS)
 
-def convert(
-    config: Config,
-    input_directory: str,
-    output_directory: str,
-    output_format: str,
-    workers: int
-):
+# Convert the files in the input_directory and place them in the output_directory
+def convert(config: Config, input_directory: str, output_directory: str, output_format: str, workers: int):
     logger = config.logger
     logger.info("Starting conversion of {}.".format(input_directory))
 
@@ -51,11 +46,12 @@ def convert(
             logger = logger
         ) for file_path in audio_files
     ]
-    with Pool(processes = workers) as worker:
+    with Pool(processes=workers) as worker:
         worker.map(converter, audio_files)
 
     logger.success("See {} for converted audio.".format(output_path.as_posix()))
 
+# Recursively search for files in the given input_path
 def get_audio_files(input_path: Path) -> Sequence[Path]:
     audio_files = []
     for input_file in input_path.iterdir():
@@ -81,6 +77,7 @@ def converter(conversion_job: ConversionJob):
     logger.verbose(
         "Converting '{}' to format '{}'...".format(audio_name, output_format), verbose_flag
     )
+
     audio = AudioSegment.from_file(audio_file.as_posix(), audio_file.suffix[1:])
     output_name = output_path.joinpath(converted_name)
     audio.export(output_name.as_posix(), format=output_format, bitrate="192k",)

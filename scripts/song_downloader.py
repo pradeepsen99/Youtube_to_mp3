@@ -2,29 +2,30 @@
 import pytube
 import converter
 
-from logger import Logger
+from config import Config
 from pathlib import Path
 
 # Download from a specific file containing the list of links
-def download_from_file(file_path: str, logger: Logger):
+def download_from_file(file_path: str, config: Config):
     songs = open(file_path)
     for link in songs:
-        download(link, logger)
+        download(link, config)
+    songs.close()
 
 # Just a dumb wrapper around the download function
-def download_from_link(link: str, logger: Logger):
-    download(link, logger)
+def download_from_link(link: str, config: Config):
+    download(link, config)
 
 # Download a video file from a single link
-def download(link: str, logger: Logger):
+def download(link: str, config: Config):
     try:
+        logger = config.logger
         logger.verbose("Downloading " + link[:-1], True)
         yt = pytube.YouTube(link)
         audio_stream = yt.streams.get_audio_only()
-        download_path = Path.home().as_posix() + "/Downloads/Downloaded_Songs"
-        if not Path(download_path).exists():
-            Path(download_path).mkdir(exist_ok=True)
-        audio_stream.download(output_path=download_path)
+        if not Path(config.yt_dl_path).exists():
+            Path(config.yt_dl_path).mkdir(exist_ok=True)
+        audio_stream.download(output_path=config.yt_dl_path)
         logger.success("Downloaded " + link[:-1])
     except Exception as e:
         logger.error("Download Failed:\n{}".format(e))
