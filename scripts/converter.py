@@ -53,6 +53,7 @@ def convert(config: Config, input_directory: str, output_directory: str, output_
     logger.success("See {} for converted audio.".format(output_path.as_posix()))
 
 # Recursively search for files in the given input_path
+# TODO Make sure that already converted files would not be converted again.
 def get_audio_files(input_path: Path) -> Sequence[Path]:
     audio_files = []
     for input_file in input_path.iterdir():
