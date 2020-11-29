@@ -13,8 +13,8 @@ from song_downloader import download_from_link, download_from_file
 def convert():
     c = Config(
         verbose=True,
-        yt_dl_path=Path.home().as_posix() + "/Downloads/Downloaded_Songs",
-        convert_path=Path.home().as_posix() + "/Downloads/Converted_Songs",
+        yt_dl_path=Path.home().as_posix() + "/Downloads/Downloaded_Videos",
+        convert_path=Path.home().as_posix() + "/Downloads/Converted_Videos",
         workers=5,
         out_format=".mp3"
     )
