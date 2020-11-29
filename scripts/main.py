@@ -20,5 +20,5 @@ def convert():
     )
 
     # download_from_link("testlink", c)
-    download_from_file(file_path=Path.home().as_posix() + "/Downloads/songs.txt", config=c)
+    download_from_file(file_path=Path.home().as_posix() + "/Downloads/links.txt", config=c)
     conv(config=c, input_directory=c.yt_dl_path, output_directory=c.convert_path, output_format=c.out_format, workers=c.workers)
