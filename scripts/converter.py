@@ -5,12 +5,13 @@ from typing import Sequence
 from config import Config
 from pathlib import Path
 from conversionjob import ConversionJob
+from os import remove as remove_file
 
 AUDIO_EXTENSIONS = [
     ".aiff",
     ".flac",
     ".m4a",
-    ".mp3",
+    #".mp3", temporary fix to avoid the pre-existing .mp3 file conversion to .mp3 format.
     ".mp4",
     ".wav",
 ]
@@ -24,10 +25,6 @@ def convert(config: Config, input_directory: str, output_directory: str, output_
 
     input_path = Path(input_directory)
     output_path = Path(output_directory)
-
-    logger.verbose("Input : {}".format(input_path.as_posix()), config.verbose)
-    logger.verbose("Output : {}".format(output_path.as_posix()), config.verbose)
-    logger.verbose("Workers : {}".format(workers), config.verbose)
 
     if not output_path.exists():
         logger.verbose(
@@ -77,11 +74,17 @@ def converter(conversion_job: ConversionJob):
     converted_name = "{}.{}".format(audio_name, output_format)
 
     logger.info(
-        "Converting '{}' to format '{}'...".format(audio_name, output_format)
+        "Converting '{}' => '{}'...".format(audio_name, output_format)
     )
 
     audio = AudioSegment.from_file(audio_file.as_posix(), audio_file.suffix[1:])
     output_name = output_path.joinpath(converted_name)
     audio.export(output_name.as_posix(), format=output_format, bitrate="192k",)
 
-    logger.success("'{}' converted!".format(audio_name))
+    logger.warn("'{}' converted! Removing video file...".format(audio_name))
+
+    try:
+        remove_file(audio_file)
+        logger.success("'{}' removed".format(audio_file))
+    except:
+        logger.error("Could not remove '{}'".format(audio_file))

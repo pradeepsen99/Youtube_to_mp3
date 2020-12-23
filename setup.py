@@ -10,5 +10,6 @@ setup(
     install_requires=[
         "click>=7.1.2,<8.0.0",
         "pydub>=0.24.1,<1.0.0",
+        "pytube>=10.1.0,<11.0.0",
     ]
 )
