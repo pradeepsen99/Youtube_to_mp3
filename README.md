@@ -32,7 +32,28 @@ python3 setup build && python3 setup install && audiodl
 ```
 This will both install the required prerequisites and launch the application.
 
-To set the videos that are needed go to links.txt and add the links seperating each link by a new line:
+## Usage
+
+You can print out help by typing `audiodl -h`
+```zsh
+❯ audiodl -h
+usage: audiodl [-h] [-w WORKERS] [-v] songs_file export_path
+
+Download and convert YouTube video content to specified audio formats
+
+positional arguments:
+  songs_file            Path to the file containing all of the YouTube links
+  export_path           Path where to convert the downloaded audio
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -w WORKERS, --workers WORKERS
+                        Amount of processes to create for audio conversion
+                        (default: 5)
+  -v, --verbose         Enable verbose for debugging purposes.
+```
+
+To set the videos that are needed create a text file and add the links seperating each link by a new line:
 ```
 Link #1
 Link #2
@@ -40,23 +61,23 @@ Link #2
 
 The output should be something like this:
 ```zsh
-❯ audiodl
+❯ audiodl -w 5 videos.txt ./Downloads -v
 [ DEBUG   ] Starting download worker processes...
-[ INFO    ] Downloading https://www.youtube.com/watch?v=
-[ INFO    ] Downloading https://www.youtube.com/watch?v=
-[ SUCCESS ] Downloaded https://www.youtube.com/watch?v=
-[ SUCCESS ] Downloaded https://www.youtube.com/watch?v=
+[ INFO    ] Downloading => 'https://www.youtube.com/watch?v='
+[ INFO    ] Downloading => 'https://www.youtube.com/watch?v='
+[ SUCCESS ] Downloaded => 'https://www.youtube.com/watch?v='
+[ SUCCESS ] Downloaded => 'https://www.youtube.com/watch?v='
 [ DEBUG   ] Exiting download process.
 [ INFO    ] Starting conversion of /Users/user/Downloads/Downloaded_Videos.
-[ DEBUG   ] Input : /Users/user/Downloads/Downloaded_Videos
-[ DEBUG   ] Output : /Users/user/Downloads/Converted_Videos
+[ DEBUG   ] Input : videos.txt
+[ DEBUG   ] Output : /Downloads
 [ DEBUG   ] Workers : 5
 [ DEBUG   ] Starting the conversion worker processes...
-[ INFO    ] Converting 'Video File 1' to format 'mp3'...
-[ INFO    ] Converting 'Video File 2' to format 'mp3'...
-[ SUCCESS ] 'Video File 2' converted!
-[ SUCCESS ] 'Video File 1' converted!
-[ SUCCESS ] See /Users/user/Downloads/Converted_Videos for converted audio.
+[ INFO    ] Converting 'Video File 1' => 'mp3'...
+[ INFO    ] Converting 'Video File 2' => 'mp3'...
+[ SUCCESS ] 'Video File 2' exported!
+[ SUCCESS ] 'Video File 1' exported!
+[ SUCCESS ] See /Downloads for exported audio.
 ```
 
 ## Changing location configuration
