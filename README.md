@@ -6,7 +6,6 @@ Downloads specified YouTube videos and converts them into a specified .mp3 forma
 
 - You will need Python version 3.9.0 for this to function. (Later versions not tested as of yet)
 - setuptools
-- [pydub](https://github.com/jiaaro/pydub)
 - pip3
 - [ffmpeg](https://github.com/jiaaro/pydub#getting-ffmpeg-set-up) (Click on the link to see how to setup ffmpeg on different platforms)
 
