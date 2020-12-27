@@ -7,6 +7,9 @@ class Logger(object):
     def info(self, message: str):
         self.display("[ INFO    ] {}".format(message), "blue")
 
+    def warn(self, message: str):
+        self.display("[ WARN    ] {}".format(message), "yellow")
+
     def verbose(self, message: str, verbose_flag: bool):
         if verbose_flag:
             self.display("[ DEBUG   ] {}".format(message), "cyan")

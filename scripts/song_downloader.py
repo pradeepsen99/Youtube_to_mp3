@@ -40,26 +40,11 @@ def download_from_link(link: str, config: Config):
 def download(dlconfig: DLConfig):
     try:
         logger = dlconfig.config.logger
-        logger.info("Downloading " + dlconfig.link[:-1])
         yt = pytube.YouTube(dlconfig.link)
-        audio_stream = yt.streams.get_audio_only()
+        logger.info("Downloading <= '{}'".format(yt.title))
         if not Path(dlconfig.config.yt_dl_path).exists():
             Path(dlconfig.config.yt_dl_path).mkdir(exist_ok=True)
-        audio_stream.download(output_path=dlconfig.config.yt_dl_path)
-        logger.success("Downloaded " + dlconfig.link[:-1])
+        yt.streams.first().download(output_path=dlconfig.config.yt_dl_path)
+        logger.success("Downloaded : '{}'".format(yt.title))
     except Exception as e:
         logger.error("Download Failed:\n{}".format(e))
-
-
-# os.chdir("downloaded_songs/")
-
-'''
-for file in glob.glob("*.mp4"):
-    #print(file)
-    try:
-        video = AudioFileClip(file)
-        file_mp3 = "../downloaded_songs_mp3/"+file[:-1]+"3"
-        video.write_audiofile(file_mp3);
-    except:
-        print("mp3 conversion failed!")
-'''
