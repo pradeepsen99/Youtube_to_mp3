@@ -1,8 +1,13 @@
 from setuptools import setup, find_packages
+from scripts.__version__ import __version__
 
 setup(
     name="Youtube_to_mp3",
-    version="0.3.4",
+    author="Pradeep Senthil",
+    author_email="https://github.com/pradeepsen99",
+    maintainer="Arnas Amankavicius",
+    maintainer_email="https://github.com/ArnasAmankavicius",
+    version=__version__,
     packages=find_packages(),
     include_package_data=True,
     python_requires=">=3.6",

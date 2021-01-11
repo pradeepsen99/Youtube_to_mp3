@@ -30,6 +30,11 @@ To run the code, go to the code directory and execute the following.
 ```bash
 python3 setup build && python3 setup install && audiodl
 ```
+
+or 
+
+You can execute the 'build.sh' scripts to build and install the application automatically.
+
 This will both install the required prerequisites and launch the application.
 
 ## Usage
@@ -80,22 +85,6 @@ The output should be something like this:
 [ SUCCESS ] See /Downloads for exported audio.
 ```
 
-## Changing location configuration
-
-You can change the directory where the songs.txt file is located. In addition, you can change the download locations for YouTube downloads and conversions inside the *main.py* file.
-```python
-c = Config(
-  verbose=True,
-  yt_dl_path=Path.home().as_posix() + "/Downloads/Downloaded_Videos", <- YouTube downloads location
-  convert_path=Path.home().as_posix() + "/Downloads/Converted_Videos", <- Converted file location
-  workers=5,
-  out_format=".mp3"
-)
-link_file = Path.home().as_posix() + "/Downloads/links.txt"
-```
-By default on MacOS, YouTube downloads are at: */Users/user/Downloads/Downloaded_Videos*, converted files are located at: */Users/user/Downloads/Converted_Videos*, and links.txt is located at: */Users/user/Downloads/*
-
-> For now this is the way to add links for downloads. Future updates will make it easier.
 ## Authors
 
 * **Pradeep Senthil** - *Initial work* - [pradeepsen99](https://github.com/pradeepsen99)
